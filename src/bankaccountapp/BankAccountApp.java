@@ -1,81 +1,73 @@
 package bankaccountapp;
 
+import utilities.SelectFile;
+import utilities.SyntaxCheck;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
+
+import static utilities.SyntaxCheck.*;
 
 public class BankAccountApp {
     public static void main(String[] args) throws SQLException {
-        int i = 1;
+        Scanner inputObj = new Scanner(System.in);
 
         DatabaseHandler dbHandler = new DatabaseHandler("localhost", 3306, "bankapp", "root", "Mmetalplast7&");
 
-        dbHandler.showDatabase();
+        System.out.println("Welcome to your bank managing application!");
+        label:
+        while(true){
+            System.out.println("\nPlease enter the desired command (Input 'help' for...help!):");
+            String inputCommand = inputObj.nextLine();
+            String[] tokens = inputCommand.split(" ");
 
 
-        List<Account> accounts = new LinkedList<Account>();
-
-        //Read a csv file and then create new accounts based on that data
-        String file = "C:\\Users\\Konstantinos\\Desktop\\NewBankAccounts.csv";
-        List<String[]> newAccountHolders = utilities.CSV.read(file);
-        for (String[] accountHolder : newAccountHolders){
-
-
-            String name = accountHolder[0];
-            String sSN = accountHolder[1];
-            String accountType = accountHolder[2];
-            double initDeposit = Double.parseDouble(accountHolder[3]);
-
-            dbHandler.insertClient(i, name, sSN, accountType, initDeposit);
-            i++;
-
-            /*
-
-            if (accountType.equals("Savings")){
-                accounts.add(new Savings(name, sSN, initDeposit));
+            switch (tokens[0]) {
+                case "help":
+                    System.out.println("The available commands are:\n\n" +
+                            "printall: Prints all clients.\n\n" +
+                            "insert: Inserts a client.\n" +
+                            "(Syntax: insert [First Name] [Last Name] [SSN] [Account type] [Balance])\n\n" +
+                            "insertfile: Select a CSV file that includes clients from a dialog window.\n\n" +
+                            "deleteall: Deletes all clients from the database\n\n" +
+                            "exit: Closes application.\n\n");
+                    break;
+                case "printall":
+                    dbHandler.showDatabase();
+                    break;
+                case "insert":
+                    if (SyntaxCheck.insertSyntaxOK(tokens)) {
+                        dbHandler.insertClient(tokens);
+                    } else {
+                        System.out.println("Wrong syntax.\n" +
+                                "CORRECT SYNTAX: insert [First Name] [Last Name] [SSN] [Account type] [Balance]\n");
+                    }
+                    break;
+                case "insertfile":
+                    String filePath = SelectFile.OpenWindow();
+                    if (filePath != null) {
+                        List<String[]> newAccountHolders = utilities.CSV.read(filePath);
+                        dbHandler.insertClient(newAccountHolders);
+                    } else {
+                        System.out.println("No file selected.\n");
+                    }
+                    break;
+                case "deleteall":
+                    dbHandler.deleteAll();
+                    break;
+                case "exit":
+                    dbHandler.closeConnection();
+                    break label;
+                default:
+                    System.out.println("'" + tokens[0] + "' is not a recognized command.");
+                    break;
             }
-            else if (accountType.equals("Checking")){
-                accounts.add(new Checking(name, sSN, initDeposit));
-            }
-            else{
-                //todo
-            }
-            */
-
         }
 
-        for(Account acc : accounts){
-            acc.showInfo();
-        }
-
-        //DatabaseHandler dbHandler = new DatabaseHandler("localhost", 3306, "bankapp", "root", "Mmetalplast7&");
-
-        dbHandler.showDatabase();
-
-        //dbHandler.deleteAll();
-
-        dbHandler.closeConnection();
-
-
-        /*
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/bankapp?characterEncoding=latin1&useConfigs=maxPerformance","root","Mmetalplast7&");
-//here bankapp is database name, root is username and password
-            Statement stmt=con.createStatement();
-            ResultSet rs=stmt.executeQuery("select * from clients");
-            System.out.println("BEFORE WHILE LOOP.");
-
-            while(rs.next()) {
-                System.out.println("I ACCESS WHILE LOOP.");
-                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "+rs.getDouble(5));
-            }
-            System.out.println("I EXIT WHILE LOOP.");
-
-            con.close();
-        }catch(Exception e){ System.out.println(e);}
-
-         */
     }
 }

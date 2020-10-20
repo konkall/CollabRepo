@@ -1,31 +1,20 @@
 package bankaccountapp;
 
 import java.sql.*;
+import java.util.List;
 
 public class DatabaseHandler {
 
-    private String connectionIP;
-    private int port;
-    private String dbName;
-    private String dbUsername;
-    private String dbPassword;
-
     private Connection con;
     private Statement stmt;
-    private ResultSet rs;
 
     public DatabaseHandler(String connectionIP, int port, String dbName, String dbUsername, String dbPassword){
-        this.connectionIP = connectionIP;
-        this.port = port;
-        this.dbName = dbName;
-        this.dbUsername = dbUsername;
-        this.dbPassword = dbPassword;
 
         try{
-            String url = "jdbc:mysql://" + this.connectionIP + ":" + this.port + "/" + this.dbName + "?characterEncoding=latin1&useConfigs=maxPerformance";
+            String url = "jdbc:mysql://" + connectionIP + ":" + port + "/" + dbName + "?characterEncoding=latin1&useConfigs=maxPerformance";
 
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, this.dbUsername, this.dbPassword);
+            con = DriverManager.getConnection(url, dbUsername, dbPassword);
 
 
             System.out.println("Connection Successful!");
@@ -35,10 +24,36 @@ public class DatabaseHandler {
     }
 
     //INSERT INTO `bankapp`.`clients` (`id`, `name`, `ssn`, `type`, `balance`) VALUES ('2', 'jsadja', '83748374', 'saving', '4444');
-    public void insertClient(int id, String name, String sSN, String accountType, double balance){
+    public void insertClient( String name, String sSN, String accountType, double balance){
 
+        //Local creation of "account" objects is unnecessary at the current state of the application.
+        /*
         Account account;
+        if (accountType.equals("Savings")){
+            account = new Savings(name, sSN, balance);
+        }
+        else if (accountType.equals("Checking")){
+            account = new Checking(name, sSN, balance);
+        }
+        else{
+            //
+        }*/
 
+        dbInsert(name,  sSN,  accountType, balance);
+
+    }
+
+    public void insertClient(String[] newAccountHolder){
+
+        String name = newAccountHolder[1]+ " " + newAccountHolder[2];
+        String sSN = newAccountHolder[3];
+        String accountType = newAccountHolder[4];
+        double balance = Double.parseDouble(newAccountHolder[5]);
+
+        dbInsert(name,  sSN,  accountType, balance);
+
+        //Local creation of "account" objects is unnecessary at the current state of the application.
+        /*Account account;
         if (accountType.equals("Savings")){
             account = new Savings(name, sSN, balance);
         }
@@ -47,28 +62,44 @@ public class DatabaseHandler {
         }
         else{
             //todo
-        }
+        }*/
 
-        String query = "INSERT INTO `bankapp`.`clients` (`id`, `name`, `ssn`, `type`, `balance`) VALUES ('" + id +
-                "', '" + name + "', '" + sSN + "', '" + accountType + "', '" + balance + "');";
 
-        try{
-            stmt = con.createStatement();
-            stmt.executeUpdate(query);
-
-        }catch (Exception e){
-            System.out.println(e);
-
-        }
 
     }
 
+    public void insertClient(List<String[]> newAccountHolders){
+
+        for (String[] accountHolder : newAccountHolders){
+
+            String name = accountHolder[0];
+            String sSN = accountHolder[1];
+            String accountType = accountHolder[2];
+            double balance = Double.parseDouble(accountHolder[3]);
+
+            dbInsert(name,  sSN,  accountType, balance);
+            //Local creation of "account" objects is unnecessary at the current state of the application.
+            /*Account account;
+            if (accountType.equals("Savings")){
+                account = new Savings(name, sSN, balance);
+            }
+            else if (accountType.equals("Checking")){
+                account = new Checking(name, sSN, balance);
+            }
+            else{
+                //
+            }*/
+
+        }
+    }
+
     public void deleteAll(){
-        String query = "DELETE FROM `bankapp`.`clients`";
+        String query = "DELETE FROM `bankapp`.`client`";
 
         try{
             stmt = con.createStatement();
             stmt.executeUpdate(query);
+            System.out.println("\nEntry deletion successful!\n");
 
         } catch (Exception e){
             System.out.println(e);
@@ -80,10 +111,10 @@ public class DatabaseHandler {
 
         try{
             stmt = con.createStatement();
-            rs = stmt.executeQuery("select * from clients");
+            ResultSet rs = stmt.executeQuery("select * from client");
 
             while(rs.next()) {
-                System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "+rs.getDouble(5));
+                System.out.println(rs.getInt(1)+"  "+ rs.getString(2)+"  "+ rs.getString(3)+"  "+ rs.getString(4)+"  "+ rs.getDouble(5));
             }
         }catch (Exception e){
             System.out.println(e);
@@ -98,5 +129,19 @@ public class DatabaseHandler {
         System.out.println("Connection closed");
 
 
+    }
+
+    private void dbInsert(String name, String sSN, String accountType, double balance){
+        String query = "INSERT INTO `bankapp`.`client` ( `name`, `ssn`, `type`, `balance`) VALUES ('" + name + "', '" + sSN + "', '" + accountType + "', '" + balance + "');";
+
+        try{
+            stmt = con.createStatement();
+            stmt.executeUpdate(query);
+            //System.out.println("\nEntry insertion successful!\n");
+
+        }catch (Exception e){
+            System.out.println(e);
+
+        }
     }
 }
