@@ -2,8 +2,6 @@ package com.appinit.appinit;
 
 public class DataStore {
 
-
-
     private String firstname;
     private String lastname;
 
