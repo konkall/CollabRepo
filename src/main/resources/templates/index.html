@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="https://thymeleaf.org" >
 <head>
     <title>K&K</title>
     <link rel="shortcut icon" href="/images/logo.png"/>
@@ -12,12 +12,6 @@
             margin-top: 200px;
         }
 
-        #login {
-            display: block;
-            margin-left: auto;
-            margin-right: 728px;
-            margin-top: 25px;
-        }
 
 
     </style>
@@ -26,7 +20,12 @@
 
 <body style="background-color:ghostwhite;">
 <img id="logo" src="images\logo.png" alt="Logo">
-<a href="/form.html"><img id="login" src="images\login.jpg" alt="Login"></a>
+<form action="#" th:action="@{/resultsindex}" th:object="${index}" method="post"> <!-- action where  you will direct and object is the model you created-->
+    <p style="text-align:center;">Email: <input type="text" th:field="*{email}"/></p>
+    <p style="text-align:center;">Password: <input type="text" th:field="*{password}"/></p>
+    <p style="text-align:center;"><input type="submit" value="Submit"/>
+    <p style="text-align:center;"><a href="/form.html">Sign Up</a></p>
+</form>
 
 </body>
 </html>

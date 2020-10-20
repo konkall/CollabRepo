@@ -1,6 +1,7 @@
 package com.appinit.appinit.model;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -9,9 +10,23 @@ import javax.persistence.Id;
 //An entity needs an id . In this case the id is firstname.
 public class DataStore {
     @Id
+    @Column(unique=true)
+    private String email;
+
     private String firstname;
 
     private String lastname;
+
+    private String password;
+
+
+    public void setEmail(String em){
+        this.email = em;
+    }
+
+    public void setPassword(String pas){
+        this.password = pas;
+    }
 
 
     public void setFirstname(String fs){
@@ -33,6 +48,17 @@ public class DataStore {
 
         return lastname;
     }
+    public String getEmail(){
+
+        return email;
+    }
+
+    public String getPassword(){
+
+        return password;
+    }
+
+
 
 
 }
