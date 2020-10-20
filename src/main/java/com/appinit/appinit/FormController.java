@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
 @Controller
 public class FormController {
 
@@ -16,11 +17,13 @@ public class FormController {
         return "form";
     }
 
-    @RequestMapping(value = "/form.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/form", method = RequestMethod.POST)
     public String formSubmit(@ModelAttribute DataStore dataStore, Model model) {
         model.addAttribute("form", dataStore);
         return "results";
     }
 
+// cntrol +alt+sft + /  --- registry -- compile automate allow
+    //control+als+s  --- build project automatically
 }
 
