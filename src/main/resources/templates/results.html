@@ -1,16 +1,17 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org">
 <head>
+    <link rel="shortcut icon" href="/images/logo.png"/>
     <title>Show message</title>
     <meta charset="UTF-8">
 </head>
-<body>
+<body style="background-color:ghostwhite;">
 
 <h1>Result</h1>
 
-<p th:text="'Name: ' + ${datastore.firstname}"></p>
-<p th:text="'Occupation: ' + ${datastore.lastname}"></p>
-<a href="form.html">Submit another message</a>
+<p th:text="'Name: ' + ${form.firstname}"></p>
+<p th:text="'Occupation: ' + ${form.lastname}"></p>
+<a href="/form.html">Submit another message</a>
 
 </body>
 </html>

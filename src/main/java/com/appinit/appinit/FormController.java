@@ -10,16 +10,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class FormController {
 
 
-    @RequestMapping(value = "/form", method = RequestMethod.GET)
+    @RequestMapping(value = "/form.html", method = RequestMethod.GET)
     public String sendForm(Model model) {
         model.addAttribute("form", new DataStore());
         return "form";
     }
 
-    @RequestMapping(value = "/form", method = RequestMethod.POST)
+    @RequestMapping(value = "/form.html", method = RequestMethod.POST)
     public String formSubmit(@ModelAttribute DataStore dataStore, Model model) {
         model.addAttribute("form", dataStore);
         return "results";
     }
 
 }
+
