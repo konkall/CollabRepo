@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://thymeleaf.org">
+<html xmlns:th="https://thymeleaf.org" >
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Form</title>
@@ -8,7 +8,7 @@
 <body style="background-color:ghostwhite;">
 
 <h1>Form</h1>
-<form action="#" th:action="@{/form}" th:object="${datastore}" method="post">
+<form action="#" th:action="@{/form}" th:object="${form}" method="post">
     <p>First Name: <input type="text" th:field="*{firstname}"/></p>
     <p>Last Name: <input type="text" th:field="*{lastname}"/></p>
     <p><input type="submit" value="Submit"/>
