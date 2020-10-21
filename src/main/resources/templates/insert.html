@@ -2,24 +2,24 @@
 <html xmlns:th="https://thymeleaf.org" >
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Form</title>
+    <title>Insert Form</title>
     <link rel="shortcut icon" href="images\logo.png"/>
 </head>
 <body style="background-color:ghostwhite;">
 
-<h1>Form</h1>
-<form action="#" th:action="@{/resultsform}" th:object="${form}" method="post">
-    <p>First Name: <label>
-        <input type="text" th:field="*{firstname}"/>
+<h1>Insert Form</h1>
+<form action="#" th:action="@{/insertResultsform}" th:object="${insert}" method="post">
+    <p>Name: <label>
+        <input type="text" th:field="*{name}"/>
     </label></p>
-    <p>Last Name: <label>
-        <input type="text" th:field="*{lastname}"/>
+    <p>SSN: <label>
+        <input type="text" th:field="*{ssn}"/>
     </label></p>
-    <p>Email: <label>
-        <input type="text" th:field="*{email}"/>
+    <p>Account Type: <label>
+        <input type="text" th:field="*{accountType}"/>
     </label></p>
-    <p>Password: <label>
-        <input type="text" th:field="*{password}"/>
+    <p>Balance: <label>
+        <input type="text" th:field="*{balance}"/>
     </label></p>
     <p><input type="submit" value="Submit"/>
         <input type="reset" value="Reset"/></p>

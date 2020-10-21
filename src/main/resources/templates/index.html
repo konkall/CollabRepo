@@ -21,10 +21,15 @@
 <body style="background-color:ghostwhite;">
 <img id="logo" src="images\logo.png" alt="Logo">
 <form action="#" th:action="@{/resultsindex}" th:object="${index}" method="post"> <!-- action where  you will direct and object is the model you created-->
-    <p style="text-align:center;">Email: <input type="text" th:field="*{email}"/></p>
-    <p style="text-align:center;">Password: <input type="text" th:field="*{password}"/></p>
+    <p style="text-align:center;">Email: <label>
+        <input type="text" th:field="*{email}"/>
+    </label></p>
+    <p style="text-align:center;">Password: <label>
+        <input type="text" th:field="*{password}"/>
+    </label></p>
     <p style="text-align:center;"><input type="submit" value="Submit"/>
     <p style="text-align:center;"><a href="/form.html">Sign Up</a></p>
+    <p style="text-align:center;"><a href="/insert.html">Insert data</a></p>
 </form>
 
 </body>

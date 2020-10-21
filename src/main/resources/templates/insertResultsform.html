@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <link rel="shortcut icon" href="/images/logo.png"/>
+    <title>Show message</title>
+    <meta charset="UTF-8">
+</head>
+<body style="background-color:ghostwhite;">
+
+<h1>Insert Results Form</h1>
+
+<p th:text="'Name: ' + ${insert.name}"></p>
+<p th:text="'SSN: ' + ${insert.ssn}"></p>
+<p th:text="'Account Type: ' + ${insert.accountType}"></p>
+<p th:text="'Balance: ' + ${insert.balance}"></p>
+<a href="/insert.html">Submit another insert request</a>
+
+</body>
+</html>
