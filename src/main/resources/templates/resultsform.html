@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <link rel="shortcut icon" href="/images/logo.png"/>
+    <title>Show message</title>
+    <meta charset="UTF-8">
+</head>
+<body style="background-color:ghostwhite;">
+
+<h1>Results Form</h1>
+
+<p th:text="'Name: ' + ${form.firstname}"></p>
+<p th:text="'LastName: ' + ${form.lastname}"></p>
+<p th:text="'Email: ' + ${form.email}"></p>
+<p th:text="'Password: ' + ${form.password}"></p>
+<a href="/form.html">Submit another message</a>
+
+</body>
+</html>
