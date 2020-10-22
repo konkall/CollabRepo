@@ -1,11 +1,14 @@
 package com.appinit.appinit.model;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name = "kostas") //POJO=Plain Old Java Object = When we talk about a POJO, what we're describing is a straightforward type with no references to any particular frameworks
+@Entity(name = "poutsa") //POJO=Plain Old Java Object = When we talk about a POJO, what we're describing is a straightforward type with no references to any particular frameworks
 //Entity are data in a database..this entity represents a table called kostas and has two parameters. 1) firstname 2)lastname
 //An entity needs an id . In this case the id is firstname.
 public class DataStore {
@@ -18,6 +21,13 @@ public class DataStore {
     private String lastname;
 
     private String password;
+    @Getter @Setter private String lol;
+
+
+
+
+    public DataStore() {
+    }
 
 
     public void setEmail(String em){
@@ -57,7 +67,6 @@ public class DataStore {
 
         return password;
     }
-
 
 
 
