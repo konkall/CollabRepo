@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://thymeleaf.org" >
+<html xmlns:th="https://thymeleaf.org"  lang="">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Form</title>
@@ -9,18 +9,10 @@
 
 <h1>Form</h1>
 <form action="#" th:action="@{/resultsform}" th:object="${form}" method="post">
-    <p>First Name: <label>
-        <input type="text" th:field="*{firstname}"/>
-    </label></p>
-    <p>Last Name: <label>
-        <input type="text" th:field="*{lastname}"/>
-    </label></p>
-    <p>Email: <label>
-        <input type="text" th:field="*{email}"/>
-    </label></p>
-    <p>Password: <label>
-        <input type="text" th:field="*{password}"/>
-    </label></p>
+    <p>First Name: <input type="text" th:field="*{firstname}"/></p>
+    <p>Last Name: <input type="text" th:field="*{lastname}"/></p>
+    <p>Email: <input type="text" th:field="*{email}"/></p>
+    <p>Password: <input type="text" th:field="*{password}"/></p>
     <p><input type="submit" value="Submit"/>
         <input type="reset" value="Reset"/></p>
     <p><a href="/">Return</a></p>

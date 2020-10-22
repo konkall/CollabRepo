@@ -9,21 +9,21 @@
 
 <h1>Insert Form</h1>
 <form action="#" th:action="@{/insertResultsform}" th:object="${insert}" method="post">
-    <p>Name: <label>
-        <input type="text" th:field="*{name}"/>
-    </label></p>
-    <p>SSN: <label>
-        <input type="text" th:field="*{ssn}"/>
-    </label></p>
-    <p>Account Type: <label>
-        <input type="text" th:field="*{accountType}"/>
-    </label></p>
-    <p>Balance: <label>
-        <input type="text" th:field="*{balance}"/>
-    </label></p>
-    <p><input type="submit" value="Submit"/>
-        <input type="reset" value="Reset"/></p>
+    <p>Name: <input type="text" th:field="*{name}"/></p>
+    <p>SSN: <input type="text" th:field="*{ssn}"/></p>
+    <p>Account Type: <input type="text" th:field="*{accountType}"/></p>
+    <p>Balance: <input type="text" th:field="*{balance}"/></p>
+    <p><input type="submit" value="Submit"/><input type="reset" value="Reset"/></p>
     <p><a href="/">Return</a></p>
+
+</form>
+<h2>Upload File Example</h2>
+<p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
+<form method="post" th:action="@{/upload}" enctype="multipart/form-data">
+    <div class="form-group">
+        <input type="file" name="file" class="form-control-file">
+    </div>
+    <button type="submit" class="btn btn-primary">Upload File</button>
 </form>
 </body>
 </html>

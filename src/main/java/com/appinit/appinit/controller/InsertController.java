@@ -1,13 +1,20 @@
 package com.appinit.appinit.controller;
 
 import com.appinit.appinit.model.Client;
-import com.appinit.appinit.model.DataStore;
 import com.appinit.appinit.repository.ClientRepository;
-import com.appinit.appinit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 //MVC =Model view controller s a software architecture pattern, which separates application into three parts: model, view, and controller.
 // The model represents a Java object carrying data. The view visualizes the data that the model contains.
@@ -32,7 +39,6 @@ public class InsertController {
         // @ResponseBody means the returned String is the response, not a view name if you want to put5 it
         // @RequestParam means it is a parameter from the GET or POST request
 
-        //DataStore n = new DataStore();
 
         n.setName(name);
         n.setSsn(ssn);
@@ -48,6 +54,30 @@ public class InsertController {
         return "insertResultsform";
     }
 
+    @PostMapping(path="/upload") // Map ONLY POST Requests
+    public String addNewUser (@RequestParam("file") MultipartFile file, RedirectAttributes attributes, Model model) {
+        // @ResponseBody means the returned String is the response, not a view name if you want to put5 it
+        // @RequestParam means it is a parameter from the GET or POST request
+
+        if (file.isEmpty()) {
+            attributes.addFlashAttribute("message", "Please select a file to upload.");
+            return "redirect:/insert.html";
+        }
+
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        try {
+            Path path = Paths.get("C:\\Users\\Konstantinos\\Desktop\\upload\\" + fileName);
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        attributes.addFlashAttribute("message", "You successfully uploaded " + fileName + '!');
+
+        model.addAttribute("insert", new Client());
+        //model.addAttribute("file",fileName);
+        return "redirect:/insert.html";
+    }
 
     //cntrol +alt+sft + /  --- registry -- compile automate allow
     //control+als+s  --- build project automatically
