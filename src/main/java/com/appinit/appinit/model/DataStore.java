@@ -1,22 +1,26 @@
 package com.appinit.appinit.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@Entity //POJO=Plain Old Java Object = When we talk about a POJO, what we're describing is a straightforward type with no references to any particular frameworks
+@Entity(name ="kostas") //POJO=Plain Old Java Object = When we talk about a POJO, what we're describing is a straightforward type with no references to any particular frameworks
 //Entity are data in a database..this entity represents a table called kostas and has two parameters. 1) firstname 2)lastname
 //An entity needs an id . In this case the id is firstname.
 public class DataStore {
     @Id
     @Column(unique=true)
+    @NotNull
     private String email;
 
     private String firstname;
 
     private String lastname;
 
+
+    @Size(min=8)
     private String password;
 
 

@@ -1,6 +1,5 @@
 package com.appinit.appinit.repository;
 
-import com.appinit.appinit.model.Client;
 import com.appinit.appinit.model.DataStore;
 import org.springframework.data.repository.CrudRepository;
 
@@ -10,4 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 // 1 argument = Entity
 // 2 argumnet = type tou id
 public interface  UserRepository extends CrudRepository<DataStore, String> {
+    boolean existsByEmail(String email);
+    boolean existsByPassword(String password);
 }
