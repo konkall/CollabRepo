@@ -24,6 +24,8 @@ public class Client {
     private double balance;
 
 
+
+
     public void setId(long id) {
         this.id = id;
     }
