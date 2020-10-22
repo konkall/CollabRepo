@@ -19,10 +19,10 @@ public class FormController {
 
 
         @GetMapping(value = "/form.html")
-        public String sendForm(Model model) {
-        model.addAttribute("form", new DataStore());
-        return "form";
-    }
+            public String sendForm(Model model) {
+            model.addAttribute("form", new DataStore());
+            return "form";
+        }
 
   //  @PostMapping(value = "/form")
   //  public String formSubmit(@ModelAttribute DataStore dataStore, Model model) {
@@ -54,7 +54,7 @@ public class FormController {
         model.addAttribute("password",n.getPassword());
         return "resultsform";
     }
-// cntrol +alt+sft + /  --- registry -- compile automate allow
+ //cntrol +alt+sft + /  --- registry -- compile automate allow
     //control+als+s  --- build project automatically
 }
 

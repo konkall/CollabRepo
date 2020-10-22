@@ -1,5 +1,6 @@
 package com.appinit.appinit.repository;
 
+import com.appinit.appinit.model.Client;
 import com.appinit.appinit.model.DataStore;
 import org.springframework.data.repository.CrudRepository;
 

@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <link rel="shortcut icon" href="/images/logo.png"/>
+    <title>Show message</title>
+    <meta charset="UTF-8">
+</head>
+<body style="background-color:ghostwhite;">
+
+<h1>Insert File Results Form</h1>
+
+<p th:text="'File Name: ' + ${insert.file}"></p>
+<a href="/insert.html">Submit another insert request</a>
+
+</body>
+</html>
