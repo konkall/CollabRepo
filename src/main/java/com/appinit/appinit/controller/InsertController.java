@@ -1,5 +1,6 @@
 package com.appinit.appinit.controller;
 
+import com.appinit.appinit.utilities.CSV;
 import com.appinit.appinit.model.Client;
 import com.appinit.appinit.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.*;
 
 //MVC =Model view controller s a software architecture pattern, which separates application into three parts: model, view, and controller.
 // The model represents a Java object carrying data. The view visualizes the data that the model contains.
@@ -64,14 +66,32 @@ public class InsertController {
             return "redirect:/insert.html";
         }
 
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+        Path path=null;
         try {
-            Path path = Paths.get("C:\\Users\\Konstantinos\\Desktop\\upload\\" + fileName);
+            path = Paths.get("C:\\Users\\Konstantinos\\Desktop\\upload\\" + fileName);
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        //int i = 0;
+        String pathString = path.toString();
+        List<String[]> newAccountHolders = CSV.read(pathString);
+        for (String[] accountHolder : newAccountHolders){
+            Client n = new Client();
+
+            n.setName(accountHolder[0]);
+            n.setSsn(accountHolder[1]);
+            n.setAccountType(accountHolder[2]);
+            n.setBalance(Double.parseDouble(accountHolder[3]));
+
+            clientRepository.save(n);
+
+        }
         attributes.addFlashAttribute("message", "You successfully uploaded " + fileName + '!');
 
         model.addAttribute("insert", new Client());
