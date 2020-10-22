@@ -1,0 +1,42 @@
+#logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+}
+
+#checkbox{
+    width: 1%;
+}
+
+input {
+
+    width: 10%;
+    padding: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+}
+
+
+/* Style the submit button */
+input[type=submit] {
+
+    width: 5%;
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Style the container for inputs */
+.container {
+
+    background-color: ghostwhite;
+    text-align: center;
+}
+
+
+body {
+    background-color: ghostwhite;
+}
