@@ -1,0 +1,185 @@
+#adminimage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    max-width: 15%;
+
+}
+
+#submitbut{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.insertform {
+
+    margin-top: 5px;
+    border-radius: 1px;
+    background-color: ghostwhite;
+    padding: 10px;
+    text-align: center;
+
+}
+
+
+
+h2{
+    text-align: center
+}
+
+
+.input[type=text] {
+
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+
+
+}
+
+
+
+.insertform input {
+    width: 15%;
+    height: 30px;
+    font-size:17px;
+
+}
+
+
+input[type=submit] {
+
+    width: 7.5%;
+    background-color: #4CAF50;
+    color: white;
+    height: 30px;
+    font-size:17px;
+
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+input[type=reset] {
+
+    width: 7.5%;
+    background-color: #4CAF50;
+    color: white;
+    height: 30px;
+    font-size:17px;
+
+}
+
+input[type=reset]:hover {
+    background-color: #45a049;
+}
+
+
+::-webkit-input-placeholder {
+    font-size: 17px;
+}
+::-moz-placeholder {;
+    font-size: 17px;
+}
+:-ms-input-placeholder {
+    font-size: 17px;
+}
+::placeholder {
+    font-size: 17px;
+}
+
+#return{
+    font-size:17px;
+}
+
+/*
+.form-group[type=file] {
+
+    width: 7.5%;
+    background-color: #4CAF50;
+    color: white;
+    height: 30px;
+    font-size:17px;
+}
+
+
+
+.btn-wrapper {
+    font-family: 'Veranda', sans-serif;
+    text-align: center;
+}
+
+.btn-file {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    border-radius: 3px;
+    color: #fff;
+    margin-right: 8px;
+
+
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+    text-align: center;
+}
+
+.btn-file span {
+    display: block;
+    color: #777;
+}
+
+*/
+
+
+
+
+
+div.btn-wrapper{
+
+    text-align: center;
+
+}
+
+
+div.sub-button{
+
+    margin-top: 5px;
+    border-radius: 1px;
+    background-color: ghostwhite;
+    padding: 10px;
+    text-align: center;
+}
+#submitbut{
+    width: 7.5%;
+    background-color: #4CAF50;
+    color: white;
+    height: 30px;
+    font-size:17px;
+
+}
+
+#submitbut:hover {
+    background-color: #45a049;
+}
+
+body {
+    background-color: ghostwhite;
+}

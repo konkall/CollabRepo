@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity(name ="kostas") //POJO=Plain Old Java Object = When we talk about a POJO, what we're describing is a straightforward type with no references to any particular frameworks
+@Entity(name ="LoginCredentials") //POJO=Plain Old Java Object = When we talk about a POJO, what we're describing is a straightforward type with no references to any particular frameworks
 //Entity are data in a database..this entity represents a table called kostas and has two parameters. 1) firstname 2)lastname
 //An entity needs an id . In this case the id is firstname.
 public class DataStore {
@@ -23,6 +23,7 @@ public class DataStore {
     @Size(min=8)
     private String password;
 
+    private String repassword;
 
     public void setEmail(String em){
         this.email = em;
@@ -30,6 +31,10 @@ public class DataStore {
 
     public void setPassword(String pas){
         this.password = pas;
+    }
+
+    public void setRepassword(String repas){
+        this.repassword = repas;
     }
 
 
@@ -60,6 +65,11 @@ public class DataStore {
     public String getPassword(){
 
         return password;
+    }
+
+    public String getRepassword(){
+
+        return repassword;
     }
 
 

@@ -3,27 +3,40 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Insert Form</title>
-    <link rel="shortcut icon" href="images\logo.png"/>
+    <link rel="shortcut icon" href="images/logo.png"/>
+    <link rel="stylesheet" href="css/insert.css">
 </head>
-<body style="background-color:ghostwhite;">
+<body>
 
-<h1>Insert Form</h1>
+<img id="adminimage" src="images/admin.png" alt="adminimage">
+<div class ="insertform">
 <form action="#" th:action="@{/insertResultsform}" th:object="${insert}" method="post">
-    <p>Name: <input type="text" th:field="*{name}"/></p>
-    <p>SSN: <input type="text" th:field="*{ssn}"/></p>
-    <p>Account Type: <input type="text" th:field="*{accountType}"/></p>
-    <p>Balance: <input type="text" th:field="*{balance}"/></p>
+    <p><input placeholder="Name" type="text" th:field="*{name}"/></p>
+    <p><input placeholder="SSN" type="text" th:field="*{ssn}"/></p>
+    <p><input placeholder="Account Type" type="text" th:field="*{accountType}"/></p>
+    <p><input placeholder="Balance" type="text" th:field="*{balance}"/></p>
     <p><input type="submit" value="Submit"/><input type="reset" value="Reset"/></p>
-    <p><a href="/">Return</a></p>
+    <p><a id="return" href="/">Return</a></p>
 
 </form>
+</div>
+
 <h2>Upload File</h2>
 <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
 <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
-    <div class="form-group">
-        <input type="file" name="file" class="form-control-file">
+    <td>
+    <div class="btn-wrapper">
+        <label class = "btn-file">
+            <input  type="file" name="file" class="form-control-file">
+        </label>
     </div>
-    <button type="submit" class="btn btn-primary">Upload File</button>
+    </td>
+
+
+    <div class="sub-button">
+    <button  id="submitbut" type="submit" class="btn btn-primary">Upload File</button>
+    </div>
+
 </form>
 </body>
 </html>

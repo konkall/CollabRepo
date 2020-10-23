@@ -3,8 +3,6 @@ package com.appinit.appinit.repository;
 import com.appinit.appinit.model.DataStore;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 //Spring Data = project where you can connect your program with databases
 //interface is an absctract class..cannot have a body because you cannot create objects
 //crud stands for Create Read Update Delete
@@ -14,5 +12,5 @@ public interface  UserRepository extends CrudRepository<DataStore, String> {
     boolean existsByEmail(String email);
     boolean existsByPassword(String password);
 
-   List<DataStore> findAllByEmail(String email);
+   DataStore findAllByEmail(String email);
 }
