@@ -9,14 +9,13 @@
 
 <body>
 <img id="logo" src="images/logo.png" alt="Logo">
-
 <div  class="container">
 <form action="#" th:action="@{/resultsindex}" th:object="${index}" method="post"> <!-- action where  you will direct and object is the model you created-->
     <p><label>
         <input type="email" placeholder="Email Address"  required th:field="*{email}"/>
     </label></p>
     <p> <label>
-        <input id="pwd" type="password"  placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required  th:field="*{password}"/>
+        <input id="pwd" type="password"  placeholder="Password"  required  th:field="*{password}"/>
 
     </label></p>
 
@@ -26,8 +25,7 @@
     <p><a href="/insert.html">Insert data</a></p>
 </form>
 </div>
- <div>
- </div>
+
 
 
 <script>
