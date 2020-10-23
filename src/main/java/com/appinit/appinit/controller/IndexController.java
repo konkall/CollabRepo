@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-
 @Controller
 public class IndexController {
 
@@ -32,15 +30,16 @@ public class IndexController {
             //System.out.println(userRepository.existsByEmail(dataStore.getEmail()));
 
 
-            if ((dataStore.getEmail().equals("A@gmail.com")) && (dataStore.getPassword().equals("12345678Aa!"))) {
+            if ((dataStore.getEmail().equals("A@gmail.com")) && (dataStore.getPassword().equals("1")))
+            {
                 return "admin";
 
             } else {
                 if ((userRepository.existsByEmail(dataStore.getEmail()))) {
 
-                    List<DataStore> entities = userRepository.findAllByEmail((dataStore.getEmail()));
+                    DataStore check = userRepository.findAllByEmail((dataStore.getEmail()));
 
-                        DataStore check = entities.get(0);
+                     //   DataStore check = entities.get(0);
 
                         if (check.getPassword().equals(dataStore.getPassword())) {
                             return "resultsindex";
