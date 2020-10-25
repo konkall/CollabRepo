@@ -99,7 +99,5 @@ public class InsertController {
         return "redirect:/insert.html";
     }
 
-    //cntrol +alt+sft + /  --- registry -- compile automate allow
-    //control+als+s  --- build project automatically
 }
 

@@ -2,6 +2,7 @@ package com.appinit.appinit.model;
 
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.persistence.*;
 
@@ -65,4 +66,6 @@ public class Client {
     public double getBalance() {
         return balance;
     }
+
+
 }

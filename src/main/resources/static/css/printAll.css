@@ -1,0 +1,38 @@
+h1 {
+    font-size:50px;
+    text-align: center;
+}
+
+.clientsTable{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table {
+    width: 32%;
+    background-color: #4CAF50;
+    color: #000000;
+    border: 2px solid #363636;
+}
+thead{
+    text-align: left;
+    border: 2px solid #363636;
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+th {
+    height: 50px;
+    font-size:25px;
+
+    border-left: 2px solid #363636;
+
+}
+
+tbody {
+    font-size:20px;
+}
+td {
+    border-left: 2px solid #363636;
+
+}
