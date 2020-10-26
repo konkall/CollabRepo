@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://thymeleaf.org" >
+<html xmlns:th="https://thymeleaf.org"  lang="">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Insert Form</title>
@@ -19,20 +19,21 @@
     <p><a id="return" href="/">Return</a></p>
 
 </form>
-</div>
+</div >
 
 <h2>Upload File</h2>
-<p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
+
 <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
-    <td>
     <div class="btn-wrapper">
+
+        <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
         <label class = "btn-file">
             Choose File
             <input  type="file" name="file" class="form-control-file">
         </label>
         <span>No file chosen</span>
+
     </div>
-    </td>
 
 
     <div class="sub-button">
