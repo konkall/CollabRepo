@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org"  lang="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Print</title>
+    <link rel="shortcut icon" href="images/logo.png"/>
+    <link rel="stylesheet" href="css/printAll.css">
+</head>
+
+<body style="background-color:ghostwhite;">
+<a href="/search.html">Submit another search</a>
+<h1>All Entries</h1>
+<form action="#" th:action="@{/searchResults}"   method="post">
+    <div>
+        <table class="clientsTable">
+            <thead>
+            <tr>
+                <th th:text="Name"></th>
+                <th th:text="SSN"></th>
+                <th th:text="'Account Type'"></th>
+                <th th:text="Balance"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sb : ${nameResults}">
+                <td th:text="${{sb.name}}"></td>
+                <td th:text="${sb.ssn}"></td>
+                <td th:text="${sb.accountType}"></td>
+                <td th:text="${sb.balance}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</form>
+</body>
+
+</html>

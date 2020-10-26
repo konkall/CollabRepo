@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org"  lang="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Insert Form</title>
+    <link rel="shortcut icon" href="images/logo.png"/>
+    <link rel="stylesheet" href="css/search.css">
+</head>
+
+<body>
+<h1>Search</h1>
+<div class ="searchform">
+    <form action="#" th:action="@{/searchResults}" th:object="${search}" method="post">
+        <p><input placeholder="Name" type="text" th:field="*{name}"/></p>
+        <p><input placeholder="SSN" type="text" th:field="*{ssn}"/></p>
+        <p><input placeholder="Account Type" type="text" th:field="*{accountType}"/></p>
+        <p><input type="submit" value="Submit"/><input type="reset" value="Reset"/></p>
+        <p><a id="return" href="/">Return</a></p>
+    </form>
+</div>
+
+</body>
+</html>
