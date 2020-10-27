@@ -18,16 +18,16 @@ public class Client {
             name = "native",
             strategy = "native"
     )
-    private long id;
+    private Long id;
     private String name;
     private String ssn;
     private String accountType;
-    private double balance;
+    private Double balance;
 
 
 
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -43,11 +43,11 @@ public class Client {
         this.accountType = accountType;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -63,7 +63,7 @@ public class Client {
         return accountType;
     }
 
-    public double getBalance() {
+    public Double getBalance() {
         return balance;
     }
 

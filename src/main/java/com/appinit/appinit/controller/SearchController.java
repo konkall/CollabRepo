@@ -4,6 +4,8 @@ import com.appinit.appinit.utilities.CSV;
 import com.appinit.appinit.model.Client;
 import com.appinit.appinit.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -37,39 +39,28 @@ public class SearchController {
 
     @PostMapping(path="/searchResults") // Map ONLY POST Requests
     public String addNewUser (@RequestParam String name, @RequestParam String ssn
-            ,  @RequestParam String accountType
-            ,@ModelAttribute Client n, Model model) {
+            , @RequestParam String accountType
+            , @ModelAttribute Client n, Model model) {
 
-        Iterable<Client> searchResults;
-        if (!name.isEmpty()){
-            if(!ssn.isEmpty()){
-                if(!accountType.isEmpty()){
-                    searchResults = clientRepository.findAllByNameAndSsnAndAccountType(name, ssn, accountType);
-                }else{
-                    searchResults = clientRepository.findAllByNameAndSsn(name, ssn);
-                }
-            }else{
-                if(!accountType.isEmpty()){
-                    searchResults = clientRepository.findAllByNameAndAccountType(name, accountType);
-                }else{
-                    searchResults = clientRepository.findAllByNameContaining(name);
-                }
-            }
-        }else{
-            if(!ssn.isEmpty()){
-                if(!accountType.isEmpty()){
-                    searchResults = clientRepository.findAllBySsnAndAccountType(ssn, accountType);
-                }else{
-                    searchResults = clientRepository.findAllBySsn(ssn);
-                }
-            }else{
-                if(!accountType.isEmpty()){
-                    searchResults = clientRepository.findAllByAccountType(accountType);
-                }else{
-                    searchResults = clientRepository.findAll();
-                }
-            }
+        Client client = new Client();
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnorePaths("id", "balance")
+                .withIgnoreNullValues()
+                .withMatcher("name", ExampleMatcher.GenericPropertyMatcher::startsWith)
+                .withIgnoreCase();
+        if(!name.isEmpty()){
+            client.setName(name);
         }
+        if(!ssn.isEmpty()){
+            client.setSsn(ssn);
+        }
+        if(!accountType.isEmpty()){
+            client.setAccountType(accountType);
+        }
+
+
+        Example<Client> example = Example.of(client, matcher);
+        Iterable<Client> searchResults = clientRepository.findAll(example);
 
         model.addAttribute("nameResults", searchResults);
 
