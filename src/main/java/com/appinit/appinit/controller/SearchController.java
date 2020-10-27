@@ -48,15 +48,10 @@ public class SearchController {
                 .withIgnoreNullValues()
                 .withMatcher("name", ExampleMatcher.GenericPropertyMatcher::startsWith)
                 .withIgnoreCase();
-        if(!name.isEmpty()){
-            client.setName(name);
-        }
-        if(!ssn.isEmpty()){
-            client.setSsn(ssn);
-        }
-        if(!accountType.isEmpty()){
-            client.setAccountType(accountType);
-        }
+
+        if(!name.isEmpty()){ client.setName(name); }
+        if(!ssn.isEmpty()){ client.setSsn(ssn); }
+        if(!accountType.isEmpty()){ client.setAccountType(accountType); }
 
 
         Example<Client> example = Example.of(client, matcher);
