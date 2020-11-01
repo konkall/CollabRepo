@@ -1,29 +1,25 @@
 package com.appinit.appinit.controller;
 
-import com.appinit.appinit.model.User;
 import com.appinit.appinit.payload.request.LoginRequest;
-import com.appinit.appinit.payload.response.JwtResponse;
 import com.appinit.appinit.repository.RoleRepository;
 import com.appinit.appinit.repository.UserRepository;
-import com.appinit.appinit.security.jwt.JwtUtils;
 import com.appinit.appinit.security.services.UserDetailsImpl;
+import com.appinit.appinit.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Controller
@@ -31,6 +27,9 @@ public class IndexController {
 
     @Autowired
     AuthenticationManager authenticationManager;
+
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     UserRepository userRepository;
@@ -41,35 +40,40 @@ public class IndexController {
     @Autowired
     PasswordEncoder encoder;
 
-    @Autowired
-    JwtUtils jwtUtils;
-
 
         @GetMapping("/")
         public String sendForm(Model model) {
-            model.addAttribute("index", new User());
+            model.addAttribute("index", new LoginRequest());
             return "index";
         }
 
     @PostMapping("/resultsindex")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public String authenticateUser(@Valid LoginRequest loginRequest, Model model) {
+        model.addAttribute("index", loginRequest);
+
+
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles));
+
+        /*Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        */
+
+
+        model.addAttribute("details", userDetails);
+
+
+        return "resultsindex";
     }
 
 

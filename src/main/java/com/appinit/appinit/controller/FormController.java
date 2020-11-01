@@ -5,9 +5,9 @@ import com.appinit.appinit.model.Role;
 import com.appinit.appinit.model.User;
 import com.appinit.appinit.payload.request.SignupRequest;
 import com.appinit.appinit.repository.UserRepository;
-import com.appinit.appinit.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,8 +26,6 @@ import java.util.Set;
 
 @Controller
 public class FormController {
-    @Autowired
-    AuthenticationManager authenticationManager;
 
     @Autowired
     UserRepository userRepository;
@@ -38,8 +36,6 @@ public class FormController {
     @Autowired
     PasswordEncoder encoder;
 
-    @Autowired
-    JwtUtils jwtUtils;
 
     @GetMapping(value = "/form.html")
     public String sendForm(Model model) {
@@ -110,7 +106,7 @@ public class FormController {
 
                         break;
                     case "mod":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                        Role modRole = roleRepository.findByName(ERole.ROLE_MOD)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
 

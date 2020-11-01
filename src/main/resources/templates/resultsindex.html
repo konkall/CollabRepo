@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <link rel="shortcut icon" href="/images/logo.png"/>
     <title>Show message</title>
@@ -8,13 +9,49 @@
 <body style="background-color:ghostwhite;">
 
 <h1>Results Index</h1>
-<!--
-<p th:text="'Name: ' + ${index.firstname}"></p>
-<p th:text="'LastName: ' + ${index.lastname}"></p>
--->
 
-<p th:text="'Email: ' + ${index.email}"></p>
-<p th:text="'Password: ' + ${index.password}"></p>
+<div>
+    User: <span sec:authentication="name"></span>
+    Spring Roles: <span sec:authentication="principal.authorities"></span>
+</div>
+
+<div sec:authorize="isAuthenticated()">
+    Welcome <b><span sec:authentication="name">Username</span></b>
+    &nbsp;
+    <i><span sec:authentication="principal.authorities">Roles</span></i>
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    This content is only shown to administrators.
+</div>
+
+<div sec:authorize="hasRole('ROLE_USER')">
+    This content is only shown to users.
+</div>
+
+<div sec:authorize="hasAuthority('ADMIN')">
+    This content is only shown to administrators.
+</div>
+
+<div sec:authorize="hasAuthority('USER')">
+    This content is only shown to users.
+</div>
+
+
+Logged user: <span sec:authentication="name">Bob</span>
+Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+
+<p th:text="'Name: ' + ${index.username}"></p>
+<p th:text="'Pass: ' + ${index.password}"></p>
+
+<p th:text="'Name: ' + ${details.username}"></p>
+<p th:text="'Pass: ' + ${details.email}"></p>
+<p th:text="'Pass: ' + ${details.password}"></p>
+<p th:text="'Pass: ' + ${details.authorities}"></p>
+
+<p><a href="/insert.html">Insert</a></p>
+<p><a href="/printAll.html">Print All</a></p>
+<p><a href="/search.html">Search</a></p>
+
 
 <a href="/">Submit another message</a>
 

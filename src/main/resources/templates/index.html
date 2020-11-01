@@ -12,7 +12,7 @@
 <div  class="container">
 <form action="#" th:action="@{/resultsindex}" th:object="${index}" method="post"> <!-- action where  you will direct and object is the model you created-->
     <p><label>
-        <input type="email" placeholder="Email Address"  required th:field="*{email}"/>
+        <input type="text" placeholder="Username"  required th:field="*{username}"/>
     </label></p>
     <p> <label>
         <input id="pwd" type="password"  placeholder="Password"  required  th:field="*{password}"/>

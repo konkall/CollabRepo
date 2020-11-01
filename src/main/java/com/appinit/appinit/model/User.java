@@ -42,6 +42,9 @@ public class User {
     @Transient
     private String repassword;
 
+    /*
+    @Column(columnDefinition = "boolean default false")
+    private Boolean is_enabled;*/
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(	name = "user_roles",
@@ -104,4 +107,10 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    /*
+    public Boolean getIs_enabled(){return this.is_enabled;}
+
+    public void setIs_enabled(Boolean is_enabled){this.is_enabled = is_enabled;}
+*/
 }
