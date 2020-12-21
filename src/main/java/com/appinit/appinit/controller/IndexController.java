@@ -41,11 +41,11 @@ public class IndexController {
     PasswordEncoder encoder;
 
 
-        @GetMapping("/")
-        public String sendForm(Model model) {
-            model.addAttribute("index", new LoginRequest());
-            return "index";
-        }
+    @GetMapping("/")
+    public String sendForm(Model model) {
+        model.addAttribute("index", new LoginRequest());
+        return "index";
+    }
 
     @PostMapping("/resultsindex")
     public String authenticateUser(@Valid LoginRequest loginRequest, Model model) {
