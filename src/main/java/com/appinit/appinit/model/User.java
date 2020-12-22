@@ -42,6 +42,10 @@ public class User {
     @Transient
     private String repassword;
 
+
+    //enable
+    private boolean isEnabled;
+
     /*
     @Column(columnDefinition = "boolean default false")
     private Boolean is_enabled;*/
@@ -108,9 +112,16 @@ public class User {
         this.roles = roles;
     }
 
-    /*
-    public Boolean getIs_enabled(){return this.is_enabled;}
 
-    public void setIs_enabled(Boolean is_enabled){this.is_enabled = is_enabled;}
-*/
+    //enable
+
+
+    public Boolean getIs_enabled(){
+        return this.isEnabled;
+    }
+
+    public void setIs_enabled(Boolean is_enabled){
+        this.isEnabled = is_enabled;
+    }
+
 }

@@ -1,17 +1,20 @@
 package com.appinit.appinit.controller;
 
+import com.appinit.appinit.model.ConfirmationToken;
 import com.appinit.appinit.model.ERole;
 import com.appinit.appinit.model.Role;
 import com.appinit.appinit.model.User;
 import com.appinit.appinit.payload.request.SignupRequest;
+import com.appinit.appinit.repository.ConfirmationTokenRepository;
 import com.appinit.appinit.repository.UserRepository;
+import com.appinit.appinit.security.services.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.appinit.appinit.repository.RoleRepository;
@@ -35,6 +38,12 @@ public class FormController {
 
     @Autowired
     PasswordEncoder encoder;
+
+    @Autowired
+    private ConfirmationTokenRepository confirmationTokenRepository;
+
+    @Autowired
+    private EmailSenderService emailSenderService;
 
 
     @GetMapping(value = "/form.html")
@@ -124,13 +133,55 @@ public class FormController {
         userRepository.save(user);
 
         System.out.println("3");
-        attributes.addFlashAttribute("message", "User registered successfully!");
+
+        //confirmationtoken
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(user);
+
+        confirmationTokenRepository.save(confirmationToken);
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Complete Registration!");
+        mailMessage.setFrom("bankupappnoreply@gmail.com");
+        mailMessage.setText("To confirm your account, please click here : "
+                +"http://localhost:8083/confirm-account?token="+confirmationToken.getConfirmationToken());
+
+
+        emailSenderService.sendEmail(mailMessage);
+
+
+        attributes.addFlashAttribute("message", "User registered successfully!Please check your email to verify your account.");
         model.addAttribute("form", new SignupRequest());
 
         return "redirect:/form.html";
         //return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+
+
+    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
+    {
+        System.out.println(confirmationToken);
+        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+
+        if(token != null)
+        {
+            User user = userRepository.findAllByEmail(token.getUser().getEmail());
+            user.setIs_enabled(true);
+            userRepository.save(user);
+            modelAndView.setViewName("accountVerified");
+        }
+        else
+        {
+            modelAndView.addObject("message","The link is invalid or broken!");
+            modelAndView.setViewName("error_verification_email");
+        }
+
+        return modelAndView;
     }
+
+}
 
 
