@@ -47,6 +47,8 @@ public class IndexController {
         return "index";
     }
 
+
+
     @PostMapping("/resultsindex")
     public String authenticateUser(@Valid LoginRequest loginRequest, Model model) {
         model.addAttribute("index", loginRequest);
@@ -55,6 +57,8 @@ public class IndexController {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

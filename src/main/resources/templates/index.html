@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="https://thymeleaf.org"  lang="">
+<html xmlns:th="https://thymeleaf.org"  lang="en">
 <head>
     <title>K&K</title>
     <link rel="shortcut icon" href="/images/logo.png"/>
@@ -8,39 +8,60 @@
 </head>
 
 <body>
-<img id="logo" src="images/logo.png" alt="Logo">
-<div  class="container">
-<form action="#" th:action="@{/resultsindex}" th:object="${index}" method="post"> <!-- action where  you will direct and object is the model you created-->
-    <p><label>
-        <input type="text" placeholder="Username"  required th:field="*{username}"/>
-    </label></p>
-    <p> <label>
-        <input id="pwd" type="password"  placeholder="Password"  required  th:field="*{password}"/>
 
-    </label></p>
 
-    <p><label><input id ="checkbox" type="checkbox" onclick="myFunction()">Show Password</label></p>
-    <p><input type="submit" value="Submit"/>
-    <p><a href="/form.html">Sign Up</a></p>
-    <p><a href="/insert.html">Insert</a></p>
-    <p><a href="/printAll.html">Print All</a></p>
-    <p><a href="/search.html">Search</a></p>
-</form>
+<body>
+<div class ="dark_space"></div>
+<div class="container">
+    <h1>Sign In</h1>
+    <hr>
+    <form action="#" th:action="@{/resultsindex}" th:object="${index}" method="post"> <!-- action where  you will direct and object is the model you created-->
+        <p>
+            <label>
+                <p>Username</p>
+                <input type="text"  id="username"  required th:field="*{username}" />
+            </label>
+        </p>
+        <p>
+            <label>
+                <p>Password</p>
+                <input id="pwd" type="password"  required  th:field="*{password}"/>
+            </label>
+        </p>
+
+        <p><label><input id ="checkbox" type="checkbox" onclick="changepasstotext()">Show Password</label>
+            <a href="https://www.w3schools.com/" id="resetpass">Reset Password?</a>
+        </p>
+        <p>
+            <input type="submit" id="Sign_in" value="Sign In"/>
+            <input type="button" id="Sign_up" onclick="gotoform()" value="Sign Up"/>
+
+        </p>
+
+    </form>
+
 </div>
 
 
 
-<script>
 
-    function myFunction() {
-        const x = document.getElementById("pwd");
-        if (x.type === "password") {
-            x.type = "text";
-        } else {
-            x.type = "password";
+
+
+    <script>
+
+        function gotoform() {
+            location.replace("form.html")
         }
-    }
-</script>
 
-</body>
+        function changepasstotext() {
+            const x = document.getElementById("pwd");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+
+    </body>
 </html>
