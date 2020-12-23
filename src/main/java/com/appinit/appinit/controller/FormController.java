@@ -151,7 +151,7 @@ public class FormController {
         emailSenderService.sendEmail(mailMessage);
 
 
-        attributes.addFlashAttribute("message", "User registered successfully!Please check your email to verify your account.");
+        attributes.addFlashAttribute("message", "User registered successfully! Please check your email to verify your account.");
         model.addAttribute("form", new SignupRequest());
 
         return "redirect:/form.html";
