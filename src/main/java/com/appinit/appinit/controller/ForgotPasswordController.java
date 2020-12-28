@@ -1,10 +1,9 @@
 package com.appinit.appinit.controller;
 
-import com.appinit.appinit.model.Client;
 import com.appinit.appinit.model.ConfirmationToken;
+import com.appinit.appinit.model.ResetPasswordToken;
 import com.appinit.appinit.model.User;
-import com.appinit.appinit.payload.request.SignupRequest;
-import com.appinit.appinit.repository.ConfirmationTokenRepository;
+import com.appinit.appinit.repository.ResetPasswordTokenRepository;
 import com.appinit.appinit.repository.RoleRepository;
 import com.appinit.appinit.repository.UserRepository;
 import com.appinit.appinit.security.services.EmailSenderService;
@@ -12,12 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
+import java.sql.Timestamp;
 
 @Controller
 public class ForgotPasswordController {
@@ -32,7 +29,7 @@ public class ForgotPasswordController {
     PasswordEncoder encoder;
 
     @Autowired
-    private ConfirmationTokenRepository confirmationTokenRepository;
+    private ResetPasswordTokenRepository resetPasswordTokenRepository;
 
     @Autowired
     private EmailSenderService emailSenderService;
@@ -52,10 +49,10 @@ public class ForgotPasswordController {
         User existingUser = userRepository.findAllByEmail(user.getEmail());
         if (existingUser != null) {
             // Create token
-            ConfirmationToken confirmationToken = new ConfirmationToken(existingUser);
+            ResetPasswordToken resetPasswordToken = new ResetPasswordToken(existingUser);
 
             // Save it
-            confirmationTokenRepository.save(confirmationToken);
+            resetPasswordTokenRepository.save(resetPasswordToken);
 
             // Create the email
             SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -63,7 +60,7 @@ public class ForgotPasswordController {
             mailMessage.setSubject("Complete Password Reset!");
             mailMessage.setFrom("test-email@gmail.com");
             mailMessage.setText("To complete the password reset process, please click here: "
-                    + "http://localhost:8083/confirm-reset?token="+confirmationToken.getConfirmationToken());
+                    + "http://localhost:8083/confirm-reset?token="+resetPasswordToken.getResetPassToken());
 
             // Send the email
             emailSenderService.sendEmail(mailMessage);
@@ -83,16 +80,25 @@ public class ForgotPasswordController {
 
 
     @RequestMapping(value="/confirm-reset", method= {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView validateResetToken(ModelAndView modelAndView, @RequestParam("token")String confirmationToken) {
-        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+    public ModelAndView validateResetToken(ModelAndView modelAndView, @RequestParam("token")String resetPassToken) {
+        ResetPasswordToken token = resetPasswordTokenRepository.findByResetPassToken(resetPassToken);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         if (token != null) {
-            User user = userRepository.findAllByEmail(token.getUser().getEmail());
-            user.setIs_enabled(true);
-            userRepository.save(user);
-            modelAndView.addObject("user", user);
-            modelAndView.addObject("email", user.getEmail());
-            modelAndView.setViewName("resetPassword");
+            long diff = timestamp.getTime() - token.getCreatedDate().getTime();
+            System.out.println("------"+token.getCreatedDate()+"\n------"+timestamp+"\n====="+diff);
+            if(diff<300000) {
+                User user = userRepository.findAllByEmail(token.getUser().getEmail());
+                user.setIs_enabled(true);
+                userRepository.save(user);
+                modelAndView.addObject("user", user);
+                modelAndView.addObject("email", user.getEmail());
+                modelAndView.setViewName("resetPassword");
+            }else {
+                modelAndView.addObject("message", "5 minutes has passed");
+                modelAndView.setViewName("error_verification_email");
+                return modelAndView;
+            }
         } else {
             modelAndView.addObject("message", "The link is invalid or broken!");
             modelAndView.setViewName("error_verification_email");

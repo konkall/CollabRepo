@@ -1,11 +1,13 @@
 package com.appinit.appinit.model;
 
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity (name = "ConfirmationToken")
-public class ConfirmationToken {
+@Entity(name = "ResetPasswordToken")
+public class ResetPasswordToken {
+
 
 
     @Id
@@ -13,8 +15,11 @@ public class ConfirmationToken {
     @Column(name="token_id")
     private long tokenid;
 
-    @Column(name="confirmation_token")
-    private String confirmationToken;
+    @Column(name="reset_password_token")
+    private String resetPassToken;
+
+    @Column(name="active")
+    private boolean active;
 
 
 
@@ -25,13 +30,13 @@ public class ConfirmationToken {
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
-    public ConfirmationToken() {
+    public ResetPasswordToken() {
     }
 
-    public  ConfirmationToken(User user) {
+    public  ResetPasswordToken(User user) {
         this.user = user;
         createdDate = new Date();
-        confirmationToken = UUID.randomUUID().toString();
+        resetPassToken = UUID.randomUUID().toString();
     }
 
 
@@ -43,12 +48,12 @@ public class ConfirmationToken {
         this.tokenid = id;
     }
 
-    public String getConfirmationToken() {
-        return confirmationToken;
+    public String getResetPassToken() {
+        return resetPassToken;
     }
 
-    public void setConfirmationToken(String confirmationToken) {
-        this.confirmationToken = confirmationToken;
+    public void setResetPassToken(String confirmationToken) {
+        this.resetPassToken = confirmationToken;
     }
 
     public Date getCreatedDate() {
@@ -61,6 +66,14 @@ public class ConfirmationToken {
 
     public User getUser() {
         return user;
+    }
+
+    public Boolean getActive(){
+        return this.active;
+    }
+
+    public void setActive(Boolean active){
+        this.active = active;
     }
 
 }
