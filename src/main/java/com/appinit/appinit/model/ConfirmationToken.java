@@ -1,5 +1,7 @@
 package com.appinit.appinit.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -8,8 +10,14 @@ import java.util.UUID;
 public class ConfirmationToken {
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(
+            strategy= GenerationType.AUTO,
+            generator="native"
+    )
+    @GenericGenerator(
+            name = "native",
+            strategy = "native"
+    )
     @Column(name="token_id")
     private long tokenid;
 
