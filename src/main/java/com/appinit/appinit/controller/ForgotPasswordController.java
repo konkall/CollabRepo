@@ -8,12 +8,15 @@ import com.appinit.appinit.repository.RoleRepository;
 import com.appinit.appinit.repository.UserRepository;
 import com.appinit.appinit.security.services.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 
 @Controller
@@ -43,13 +46,24 @@ public class ForgotPasswordController {
         return modelAndView;
     }
 
+
+
     @PostMapping(path = "/forgot_password") // Map ONLY POST Requests
+    @Transactional
     public ModelAndView ResetPassword( ModelAndView modelAndView,User user) {
 
         User existingUser = userRepository.findAllByEmail(user.getEmail());
         if (existingUser != null) {
+            ResetPasswordToken resetPasswordToken = resetPasswordTokenRepository.findByUserId(existingUser.getId());
+            if(resetPasswordToken != null){
+
+                resetPasswordTokenRepository.deleteByUserId(existingUser.getId());
+
+            }
+
+
             // Create token
-            ResetPasswordToken resetPasswordToken = new ResetPasswordToken(existingUser);
+             resetPasswordToken = new ResetPasswordToken(existingUser);
 
             // Save it
             resetPasswordTokenRepository.save(resetPasswordToken);
@@ -87,7 +101,8 @@ public class ForgotPasswordController {
         if (token != null) {
             long diff = timestamp.getTime() - token.getCreatedDate().getTime();
             System.out.println("------"+token.getCreatedDate()+"\n------"+timestamp+"\n====="+diff);
-            if(diff<300000) {
+
+            if(token.getActive().equals(true) && diff<300000) { // 5 minutes
                 User user = userRepository.findAllByEmail(token.getUser().getEmail());
                 user.setIs_enabled(true);
                 userRepository.save(user);
@@ -95,7 +110,7 @@ public class ForgotPasswordController {
                 modelAndView.addObject("email", user.getEmail());
                 modelAndView.setViewName("resetPassword");
             }else {
-                modelAndView.addObject("message", "5 minutes has passed");
+                modelAndView.addObject("message", "Token is inactive");
                 modelAndView.setViewName("error_verification_email");
                 return modelAndView;
             }
@@ -119,6 +134,8 @@ public class ForgotPasswordController {
                 System.out.println(user.getPassword() + user.getRepassword());
                 // Use email to find user
                 User tokenUser = userRepository.findAllByEmail(user.getEmail());
+                ResetPasswordToken resetPasswordToken = resetPasswordTokenRepository.findByUserId(tokenUser.getId());
+                resetPasswordToken.setActive(false);
                 tokenUser.setPassword(encoder.encode(user.getPassword()));
                 tokenUser.setRepassword(encoder.encode(user.getRepassword()));
                 userRepository.save(tokenUser);

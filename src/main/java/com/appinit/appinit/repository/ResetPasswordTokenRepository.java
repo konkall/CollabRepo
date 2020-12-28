@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface ResetPasswordTokenRepository extends JpaRepository<ResetPasswordToken,String> {
 
     ResetPasswordToken findByResetPassToken(String resetPasswordToken);
+    ResetPasswordToken findByUserId(long id);
+    void deleteByUserId(long id);
+
 }

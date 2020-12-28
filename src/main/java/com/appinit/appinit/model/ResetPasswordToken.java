@@ -37,6 +37,7 @@ public class ResetPasswordToken {
         this.user = user;
         createdDate = new Date();
         resetPassToken = UUID.randomUUID().toString();
+        setActive(true);
     }
 
 
@@ -52,8 +53,8 @@ public class ResetPasswordToken {
         return resetPassToken;
     }
 
-    public void setResetPassToken(String confirmationToken) {
-        this.resetPassToken = confirmationToken;
+    public void setResetPassToken(String resetPassToken) {
+        this.resetPassToken = resetPassToken;
     }
 
     public Date getCreatedDate() {
